@@ -12,7 +12,7 @@ const routes = [
         component: () => import('@/views/front/Index.vue'),
       },
       {
-        path: '/About',
+        path: '/about',
         name: 'About',
         component: () => import('@/views/front/About.vue'),
       },
@@ -22,7 +22,7 @@ const routes = [
         component: () => import('@/views/front/Products.vue'),
       },
       {
-        path: '/products/:id',
+        path: '/product/:id',
         name: 'Product',
         component: () => import('@/views/front/Product.vue'),
       },

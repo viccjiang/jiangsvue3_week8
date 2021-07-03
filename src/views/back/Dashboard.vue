@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">RE:HOUSE 後台管理</a>
       <button
@@ -15,13 +15,9 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="#"
-            ><router-link to="/admin/products">管理產品列表</router-link> |</a
-          >
-          <a class="nav-link" href="#"
-            ><router-link to="/admin/orders">管理訂單列表</router-link></a
-          >
-          <a class="nav-link" href="#"><router-link to="/products">回到前台頁面</router-link></a>
+          <router-link class="nav-link" to="/admin/products">管理產品列表</router-link> |
+          <router-link class="nav-link" to="/admin/orders">管理訂單列表</router-link> |
+          <router-link class="nav-link" to="/products">回到前台頁面</router-link>
         </div>
       </div>
     </div>

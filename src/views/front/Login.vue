@@ -44,15 +44,23 @@ export default {
   methods: {
     signIn() {
       const api = `${process.env.VUE_APP_API}admin/signin`;
-      this.$http.post(api, this.user).then((response) => {
-        console.log(response.data);
-        if (response.data.success) {
-          const { token, expired } = response.data;
-          console.log(token, expired);
-          document.cookie = `hexToken=${token};expires=${new Date(expired)};`;
-          this.$router.push('/admin/products');
-        }
-      });
+      this.$http
+        .post(api, this.user)
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.success) {
+            const { token, expired } = response.data;
+            console.log(token, expired);
+            document.cookie = `hexToken=${token};expires=${new Date(expired)};`;
+            this.$router.push('/admin/products');
+          } else {
+            // alert('登入失敗，請檢查帳號、密碼');
+            this.user.password = '';
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
