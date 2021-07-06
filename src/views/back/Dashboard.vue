@@ -1,46 +1,32 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">RE:HOUSE 後台管理</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <router-link class="nav-link" to="/admin/products">管理產品列表</router-link> |
-          <router-link class="nav-link" to="/admin/orders">管理訂單列表</router-link> |
-          <router-link class="nav-link" to="/products">回到前台頁面</router-link>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <router-view></router-view>
+  <Navbar></Navbar>
+  <router-view />
 </template>
 
 <script>
+import Navbar from '../../components/Navbar.vue';
+
 export default {
+  components: {
+    Navbar,
+  },
   data() {
     return {
       check: false,
     };
   },
+
   created() {
-    console.log(this.$router);
+    // console.log(this.$router);
+    // 先取出 token 方法是 replace
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
-    this.$http.defaults.headers.common.Authorization = `${token}`;
+    // 在 header 夾帶 token
+    this.$http.defaults.headers.common.Authorization = token;
     const api = `${process.env.VUE_APP_API}api/user/check`;
-    this.$http.post(api).then((response) => {
-      console.log('user/check', response);
-      if (response.data.success) {
+    // 檢查用戶是否仍持續登入，驗證的API
+    this.$http.post(api).then((res) => {
+      console.log('user/check', res);
+      if (res.data.success) {
         this.check = true;
       } else {
         this.$router.push('/login');

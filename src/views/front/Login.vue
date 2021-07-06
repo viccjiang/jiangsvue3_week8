@@ -1,6 +1,7 @@
 <template>
   <div class="container mt-5">
     <form class="row justify-content-center" @submit.prevent="signIn">
+      <!-- @submit.prevent 事件觸發 -->
       <div class="col-md-6">
         <h1 class="h3 mb-3 font-weight-normal">請先登入</h1>
         <div class="mb-2">
@@ -38,29 +39,30 @@
 export default {
   data() {
     return {
-      user: {},
+      user: {
+        username: '',
+        password: '',
+      },
     };
   },
   methods: {
     signIn() {
+      // 環境變數
       const api = `${process.env.VUE_APP_API}admin/signin`;
-      this.$http
-        .post(api, this.user)
-        .then((response) => {
-          console.log(response.data);
-          if (response.data.success) {
-            const { token, expired } = response.data;
-            console.log(token, expired);
-            document.cookie = `hexToken=${token};expires=${new Date(expired)};`;
-            this.$router.push('/admin/products');
-          } else {
-            // alert('登入失敗，請檢查帳號、密碼');
-            this.user.password = '';
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      // 送出 api
+      this.$http.post(api, this.user).then((response) => {
+        // console.log(response.data);
+        if (response.data.success) {
+          // const token = response.data.token;
+          // const expired = response.data.expired;
+          const { token, expired } = response.data;
+          // console.log(token, expired);
+          // 存取 token 以及到期日
+          document.cookie = `hexToken=${token};expires=${new Date(expired)};`;
+          // 登入後直接進入 admin 後台的管理產品列表
+          this.$router.push('/admin/products');
+        }
+      });
     },
   },
 };

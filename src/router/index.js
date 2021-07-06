@@ -4,11 +4,10 @@ import Home from '@/views/front/Home.vue';
 const routes = [
   {
     path: '/',
-    name: 'Home',
     component: Home,
     children: [
       {
-        path: '',
+        path: '/',
         component: () => import('@/views/front/Index.vue'),
       },
       {
@@ -46,7 +45,7 @@ const routes = [
       {
         path: 'products',
         name: 'adminProducts',
-        component: () => import('@/views/back/Products.vue'),
+        component: () => import('@/views/back/AdminProducts.vue'),
       },
       {
         path: 'orders',
