@@ -1,21 +1,31 @@
 <template>
   <Navbar></Navbar>
-  <router-view />
+  <div class="container-fluid mt-3 position-relative">
+    <ToastMessages></ToastMessages>
+    <router-view />
+  </div>
 </template>
 
 <script>
+import emitter from '@/methods/emitter';
+import ToastMessages from '../../components/ToastMessages.vue';
 import Navbar from '../../components/Navbar.vue';
 
 export default {
   components: {
     Navbar,
+    ToastMessages,
   },
   data() {
     return {
       check: false,
     };
   },
-
+  provide() {
+    return {
+      emitter,
+    };
+  },
   created() {
     // console.log(this.$router);
     // 先取出 token 方法是 replace

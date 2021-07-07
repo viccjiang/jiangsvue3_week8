@@ -1,4 +1,5 @@
 <template>
+<section>
   <div id="carouselExampleCaptions" class="container carousel slide mt-5" data-bs-ride="carousel">
     <div class="carousel-indicators"></div>
     <div class="carousel-inner">
@@ -72,4 +73,7 @@
       </div>
     </div>
   </div>
+  </section>
 </template>
+
+<style lang="scss"></style>

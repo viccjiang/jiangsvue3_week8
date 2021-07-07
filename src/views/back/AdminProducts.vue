@@ -1,11 +1,12 @@
 <template>
+  <Loading :active="isLoading"></Loading>
   <div class="container">
     <div class="text-end mt-4">
       <button class="btn btn-primary" type="button" @click="openModal(true)">
         增加一個產品
       </button>
     </div>
-    <table class="table mt-4">
+    <table class="table mt-4 table-hover">
       <thead>
         <tr>
           <th width="120">分類</th>
@@ -43,6 +44,8 @@
         </tr>
       </tbody>
     </table>
+    <!-- 前內後外 -->
+    <Pagination :pages="pagination" @emit-pages="getProducts"></Pagination>
     <ProductModal
       ref="productModal"
       :product="tempProduct"
@@ -54,6 +57,7 @@
 
 <script>
 import ProductModal from '../../components/ProductModal.vue';
+import Pagination from '../../components/Pagination.vue';
 import DelModal from '../../components/DelModal.vue';
 
 export default {
@@ -63,16 +67,21 @@ export default {
       pagination: {},
       tempProduct: {},
       isNew: false,
+      isLoading: false,
     };
   },
   components: {
     ProductModal,
     DelModal,
+    Pagination,
   },
+  inject: ['emitter'],
   methods: {
-    getProducts() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products`;
+    getProducts(page = 1) {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/admin/products/?page=${page}`;
+      this.isLoading = true;
       this.$http.get(url).then((res) => {
+        this.isLoading = false;
         if (res.data.success) {
           console.log(res.data);
           this.products = res.data.products;
@@ -105,7 +114,20 @@ export default {
       this.$http[httpMethod](api, { data: this.tempProduct }).then((response) => {
         console.log(response);
         productComponent.hideModal();
-        this.getProducts();
+        // 更新產品時，判斷狀態成功或失敗，利用 emitter跨元件溝通工具 推送對應內容
+        if (response.data.success) {
+          this.getProducts();
+          this.emitter.emit('push-message', {
+            style: 'success',
+            title: '更新成功',
+          });
+        } else {
+          this.emitter.emit('push-message', {
+            style: 'danger',
+            title: '更新失敗',
+            content: response.data.message.join('、'), // 後端傳送，用 join 把陣列內容一一取出，用逗號隔開
+          });
+        }
       });
     },
     // 開啟刪除 Modal

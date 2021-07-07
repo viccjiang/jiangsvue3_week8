@@ -18,7 +18,7 @@
           <router-link class="nav-link" to="/admin/products">管理產品列表</router-link> |
           <router-link class="nav-link" to="/admin/orders">管理訂單列表</router-link> |
           <router-link class="nav-link" to="/">回到前台頁面</router-link>
-          <a href="#" @ckick.prevent="logout" class="nav-link">登出</a>
+          <a href="#" @click.prevent="logout" class="nav-link">登出</a>
         </div>
       </div>
     </div>
@@ -32,10 +32,10 @@ export default {
       // 環境變數
       const api = `${process.env.VUE_APP_API}logout`;
       // 送出 api
-      this.$http.post(api, this.user).then((res) => {
+      this.$http.post(api).then((res) => {
         if (res.data.success) {
           // console.log(response);
-          this.$router.push('login');
+          this.$router.push('/login');
         }
       });
     },

@@ -1,37 +1,54 @@
 <template>
-  <div class="container mt-5">
-    <form class="row justify-content-center" @submit.prevent="signIn">
-      <!-- @submit.prevent 事件觸發 -->
-      <div class="col-md-6">
-        <h1 class="h3 mb-3 font-weight-normal">請先登入</h1>
-        <div class="mb-2">
-          <label for="inputEmail" class="sr-only">Email address</label>
-          <input
-            type="email"
-            id="inputEmail"
-            class="form-control"
-            placeholder="Email address"
-            v-model="user.username"
-            required
-            autofocus
-          />
+  <div
+    style="height: 100vh;
+    background-image: url(https://images.unsplash.com/photo-1519974719765-e6559eac2575?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=750&q=100);
+          background-size: cover;
+          background-position:top center;
+          "
+  >
+    <div class="container">
+      <form class="row justify-content-center" @submit.prevent="signIn">
+        <!-- @submit.prevent 事件觸發 -->
+        <div class="col-md-6 py-5 my-5">
+          <h1 class="h3 mb-3  font-weight-normal">請先登入</h1>
+          <div class="mb-2">
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input
+              type="email"
+              id="inputEmail"
+              class="form-control rounded-pill  shadow-sm mt-2 py-2 px-5"
+              placeholder="Email address"
+              v-model="user.username"
+              required
+              autofocus
+            />
+          </div>
+          <div class="mb-2">
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input
+              type="password"
+              id="inputPassword"
+              class="form-control rounded-pill shadow-sm mt-2 py-2 px-5"
+              v-model="user.password"
+              placeholder="Password"
+              required
+            />
+          </div>
+
+          <!-- <div class="text-end mt-4">
+            <button class="btn btn-lg btn-secondary btn-block" type="submit">登入</button>
+          </div> -->
+          <div class="text-end mt-4">
+            <button
+              class="btn btn-lg btn-outline-light rounded-pill shadow-sm mt-2 py-2 px-5 "
+              type="submit"
+            >
+              登入
+            </button>
+          </div>
         </div>
-        <div class="mb-2">
-          <label for="inputPassword" class="sr-only">Password</label>
-          <input
-            type="password"
-            id="inputPassword"
-            class="form-control"
-            v-model="user.password"
-            placeholder="Password"
-            required
-          />
-        </div>
-        <div class="text-end mt-4">
-          <button class="btn btn-lg btn-primary btn-block" type="submit">登入</button>
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </template>
 
