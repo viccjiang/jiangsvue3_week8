@@ -30,7 +30,7 @@ export default {
   props: ['pages'],
   methods: {
     updatePage(page) {
-      // 切換頁面事件的名稱（自訂事件名稱），把頁碼帶進去
+      // 切換頁面事件的名稱（自訂事件名稱），把頁碼帶入
       this.$emit('emit-pages', page);
     },
   },
