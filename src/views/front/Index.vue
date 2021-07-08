@@ -12,10 +12,10 @@
           "
           ></div>
           <div class="carousel-caption  d-md-block pb-5">
-            <h1 style=" text-shadow: black 0em 0em 0.1em">
-              讓你的居家風格更加獨特
+            <h1 style=" text-shadow: black 0em 0em 0.1em " class="indexBannerText mb-3">
+              讓你的居家生活風格更獨特
             </h1>
-            <p style="text-shadow: black 0em 0em 0.1em">
+            <p style="text-shadow: black 0em 0em 0.1em" class="mb-4 fs-5 text">
               帶你進入美好生活，創造你的生活美學
             </p>
 
@@ -39,29 +39,37 @@
               alt="..."
             />
             <div class="card-body text-center">
-              <h4>時尚簡約櫃組</h4>
-              <div class="d-flex justify-content-between">
-                <p class="card-text text-muted mb-0">
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod.
-                </p>
-              </div>
+              <h4 class="mt-3">時尚簡約桌櫃組</h4>
+              <p class="card-text text-muted mb-0">
+                簡約風格打造你的工作環境，讓生活更簡單！
+              </p>
+              <router-link to="/products">
+                <button type="button" class="btn btn-outline-secondary rounded-pill mt-4 py-2 px-5">
+                  立即前往
+                </button>
+              </router-link>
             </div>
           </div>
         </div>
         <div class="col-md-4 mt-md-4">
           <div class="card border-0 mb-4">
             <img
-              src="https://images.unsplash.com/photo-1610671907006-ed6b3148aa9e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=750&q=80"
+              src="https://images.unsplash.com/photo-1601084881623-cdf9a8ea242c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80"
               class="card-img-top rounded-0"
               alt="..."
             />
             <div class="card-body text-center">
-              <h4>客廳居家沙發</h4>
-              <div class="d-flex justify-content-between">
-                <p class="card-text text-muted mb-0">
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod.
-                </p>
-              </div>
+              <h4 class="mt-3">客廳居家沙發</h4>
+
+              <p class="card-text text-muted mb-0">
+                舒適色調與多款式選擇，讓家更有溫度！
+              </p>
+
+              <router-link to="/products">
+                <button type="button" class="btn btn-outline-secondary rounded-pill mt-4 py-2 px-5">
+                  立即前往
+                </button>
+              </router-link>
             </div>
           </div>
         </div>
@@ -73,12 +81,17 @@
               alt="..."
             />
             <div class="card-body text-center">
-              <h4>舒適好坐椅子</h4>
-              <div class="d-flex justify-content-between">
-                <p class="card-text text-muted mb-0">
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod.
-                </p>
-              </div>
+              <h4 class="mt-3">舒適好坐椅子</h4>
+
+              <p class="card-text text-muted mb-0">
+                一張好的椅子，就能讓你享受一個人的時光。
+              </p>
+
+              <router-link to="/products">
+                <button type="button" class="btn btn-outline-secondary rounded-pill mt-4 py-2 px-5">
+                  立即前往
+                </button>
+              </router-link>
             </div>
           </div>
         </div>
@@ -90,12 +103,16 @@
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <div class="row justify-content-center py-5">
-                <div class="col-md-6 text-center py-4">
+              <div class="row justify-content-center py-4">
+                <div class="col-md-6 text-center py-3">
                   <h3>RE：HOUSE，Make Life Easier</h3>
-                  <p class="my-3">
-                    帶你進入美好生活，幫你找到最適合的傢俱，讓你享受每一刻精彩。
-                  </p>
+                  <div class="textarea my-3 text-secondary" style="line-hight=1.5;">
+                    <p>我們都對美好生活有著無限憧憬，</p>
+                    <p>偶爾需要來點療癒的事物來妝點你的生活質感，</p>
+                    <p>家，打造美好居家生活的起點，</p>
+                    <p>RE：HOUSE 帶你進入美好生活，</p>
+                    <p>幫你找到最適合的傢俱，讓你享受每一刻精彩。</p>
+                  </div>
                   <p><small>— RE：HOUSE，您的居家最佳夥伴 —</small></p>
                 </div>
               </div>

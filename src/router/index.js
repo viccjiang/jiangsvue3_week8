@@ -8,6 +8,7 @@ const routes = [
     children: [
       {
         path: '/',
+        name: 'Index',
         component: () => import('@/views/front/Index.vue'),
       },
       {
@@ -17,21 +18,24 @@ const routes = [
       },
       {
         path: '/products',
-        name: 'Products',
-        component: () => import('@/views/front/Products.vue'),
+        component: () => import('@/views/front/UserProducts.vue'),
       },
+
       {
         path: '/product/:id',
-        name: 'Product',
-        component: () => import('@/views/front/Product.vue'),
+        component: () => import('@/views/front/UserProduct.vue'),
       },
       {
         path: '/cart',
-        name: 'Cart',
         component: () => import('@/views/front/Cart.vue'),
+      },
+      {
+        path: 'checkout/:orderId',
+        component: () => import('@/views/front/UserCheckout.vue'),
       },
     ],
   },
+
   {
     path: '/login',
     name: 'Login',
@@ -52,6 +56,10 @@ const routes = [
         name: 'adminOrders',
         component: () => import('@/views/back/Orders.vue'),
       },
+      {
+        path: 'coupons',
+        component: () => import('@/views/back/Coupons.vue'),
+      },
     ],
   },
   // {
@@ -63,6 +71,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHashHistory(),
+  linkActiveClass: 'active',
   routes,
 });
 
