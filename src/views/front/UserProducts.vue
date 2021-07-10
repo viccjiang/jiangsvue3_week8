@@ -25,8 +25,12 @@
               </td>
               <td>
                 <div class="h5" v-if="!item.price">{{ item.origin_price }} 元</div>
-                <del class="h6" v-if="item.price">原價 {{ item.origin_price }} 元</del>
-                <div class="h5" v-if="item.price">現在只要 {{ item.price }} 元</div>
+                <del class="h6" v-if="item.price"
+                  >原價 NT$ {{ $filters.currency(item.origin_price) }} 元</del
+                >
+                <div class="h5" v-if="item.price">
+                  現在只要 NT$ {{ $filters.currency(item.price) }} 元
+                </div>
               </td>
               <td>
                 <div class="btn-group btn-group-sm">
@@ -58,37 +62,49 @@
           </tbody>
         </table>
       </div>
-      <!-- 購物車列表 -->
+      <Pagination :pages="pagination" @emit-pages="getProducts"></Pagination>
     </div>
   </div>
 </template>
 
 <script>
 import emitter from '@/methods/emitter';
+import Pagination from '../../components/Pagination.vue';
 
 export default {
   data() {
     return {
       products: [],
       product: {},
+      pagination: {},
       status: {
         loadingItem: '', // 對應品項 id
       },
     };
   },
+  components: {
+    Pagination,
+  },
+
   provide() {
     return {
       emitter,
     };
   },
+  inject: ['emitter'],
   methods: {
-    getProducts() {
-      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+    getProducts(page = 1) {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
       this.isLoading = true;
       this.$http.get(url).then((response) => {
         this.products = response.data.products;
         console.log('products:', response);
         this.isLoading = false;
+        if (response.data.success) {
+          console.log(response.data);
+          this.products = response.data.products;
+          this.pagination = response.data.pagination;
+        }
       });
     },
     getProduct(id) {

@@ -266,11 +266,16 @@ export default {
         this.isLoading = false;
       });
     },
+
     createOrder() {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/order`;
       const order = this.form;
-      this.$http.post(url, { data: order }).then((res) => {
-        console.log(res);
+      this.$http.post(url, { data: order }).then((response) => {
+        if (response.data.success) {
+          this.$router.push(`/checkout/${response.data.orderId}`);
+          this.$refs.form.resetForm();
+        }
+        this.isLoading = false;
       });
     },
   },

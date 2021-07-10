@@ -1,10 +1,13 @@
 <template>
-  <div class="home">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light p-3">
-      <div class="container-fluid">
-        <router-link class="nav-link" to="/">
-          <a class="navbar-brand" to="/">RE：HOUSE</a>
-        </router-link>
+  <div class="home ">
+    <nav class="navbar navbar-expand-lg  navbar-light bg-light p-3 ">
+      <div class="container  ">
+        <div>
+          <router-link class="nav-link" to="/">
+            <a class="navbar-brand" to="/"><img src="../../assets/logo.svg" width="100"/></a>
+          </router-link>
+        </div>
+
         <button
           class="navbar-toggler"
           type="button"
@@ -31,3 +34,5 @@
     <router-view></router-view>
   </div>
 </template>
+
+<style lang="scss"></style>

@@ -6,7 +6,7 @@
         <div class="carousel-item active ">
           <div
             class="card-img-top"
-            style="height: 80vh; background-image: url(https://images.unsplash.com/photo-1519974719765-e6559eac2575?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=750&q=100);
+            style="height: 80vh; background-image: url(https://images.unsplash.com/photo-1519974719765-e6559eac2575?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80);
           background-size: cover;
           background-position:bottom center;
           "
@@ -219,10 +219,14 @@
       </div>
     </div>
     <!-- footer -->
-    <div class="bg-dark">
+    <div class="bg-dark py-5">
       <div class="container">
-        <div class="d-flex align-items-center justify-content-between text-white py-4">
-          <p class="mb-0">© 2020 LOGO All Rights Reserved.</p>
+        <div class="d-flex align-items-center justify-content-between text-white mb-md-7 mb-4">
+          <div>
+            <router-link class="nav-link" to="/">
+              <a class="navbar-brand" to="/"><img src="../../assets/logo.svg" width="100"/></a>
+            </router-link>
+          </div>
           <ul class="d-flex list-unstyled mb-0 h4">
             <li>
               <a href="#" class="text-white mx-3"><i class="fab fa-facebook"></i></a>
@@ -234,6 +238,16 @@
               <a href="#" class="text-white ms-3"><i class="fab fa-line"></i></a>
             </li>
           </ul>
+        </div>
+        <div
+          class="d-flex flex-column flex-md-row justify-content-between
+          align-items-md-end align-items-start text-white"
+        >
+          <div class="mb-md-0 mb-1">
+            <p class="mb-0">02-3456-7890</p>
+            <p class="mb-0">rehouse@gmail.com</p>
+          </div>
+          <p class="mb-0">© 2021 RE：HOUSE All Rights Reserved.</p>
         </div>
       </div>
     </div>
