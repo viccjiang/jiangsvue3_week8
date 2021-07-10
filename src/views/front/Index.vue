@@ -224,7 +224,7 @@
         <div class="d-flex align-items-center justify-content-between text-white mb-md-7 mb-4">
           <div>
             <router-link class="nav-link" to="/">
-              <a class="navbar-brand" to="/"><img src="../../assets/logo.svg" width="100"/></a>
+              <a class="navbar-brand" to="/"><img src="../../assets/logowhite.png" width="100"/></a>
             </router-link>
           </div>
           <ul class="d-flex list-unstyled mb-0 h4">
