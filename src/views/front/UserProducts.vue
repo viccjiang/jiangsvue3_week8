@@ -3,7 +3,7 @@
   <div class="container ">
     <div class="row">
       <div class="col-3 mt-4">
-        <div class="list-group ">
+        <div class="list-group rounded-0">
           <a
             href="#"
             v-for="item in categories"
@@ -43,7 +43,18 @@
                       NT$ {{ $filters.currency(item.price) }} 元
                     </div>
                     <!-- 更多按鈕 -->
+
                     <div class="d-grid gap-2 col-12 mx-auto">
+                      <!-- 我的最愛 -->
+                      <button
+                        type="button"
+                        @click="addMyFavorite(item)"
+                        :class="{ active: myFavorite.includes(item.id) }"
+                        class="btn d-block btn-outline-success"
+                      >
+                        加到我的最愛
+                      </button>
+                      <!-- 查看細節 -->
                       <button
                         type="button"
                         class="btn btn-outline-secondary"
@@ -51,6 +62,7 @@
                       >
                         查看更多
                       </button>
+                      <!-- 加入購物車 -->
                       <button
                         type="button"
                         class="btn btn-outline-danger"
@@ -172,6 +184,19 @@
 import emitter from '@/methods/emitter';
 import Pagination from '../../components/Pagination.vue';
 
+// LocalStorage
+// 轉型
+const storageMethods = {
+  save(favorite) {
+    const favoriteString = JSON.stringify(favorite);
+    // hexFavorite
+    localStorage.setItem('hexFavorite', favoriteString);
+  },
+  get() {
+    return JSON.parse(localStorage.getItem('hexFavorite'));
+  },
+};
+
 export default {
   data() {
     return {
@@ -183,6 +208,7 @@ export default {
       },
       categories: [],
       selectCategory: '',
+      myFavorite: storageMethods.get() || [],
     };
   },
   components: {
@@ -196,6 +222,18 @@ export default {
   },
   // inject: ['emitter'],
   methods: {
+    addMyFavorite(item) {
+      console.log('addMyFavorite');
+      // this.myFavorite.push(item.id);
+
+      if (this.myFavorite.includes(item.id)) {
+        this.myFavorite.splice(this.myFavorite.indexOf(item.id), 1);
+      } else {
+        this.myFavorite.push(item.id);
+      }
+      console.log(this.myFavorite);
+      // storageMethods.save(this.myFavorite);
+    },
     getProducts(page = 1) {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
       this.isLoading = true;
@@ -235,6 +273,15 @@ export default {
         console.log(res);
         emitter.emit('update-cart'); // 更新購物車數量
       });
+    },
+  },
+  watch: {
+    myFavorite: {
+      // 深層監聽
+      handler() {
+        storageMethods.save(this.myFavorite);
+      },
+      deep: true,
     },
   },
   computed: {
