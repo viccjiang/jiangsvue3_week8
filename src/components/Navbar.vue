@@ -1,4 +1,5 @@
 <template>
+  <!-- 後台的 navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">RE：HOUSE 後台管理</a>

@@ -1,5 +1,5 @@
 <template>
-  <nav aria-label="Page navigation example">
+  <nav aria-label="Page navigation example ">
     <ul class="pagination justify-content-center">
       <li class="page-item" :class="pages.has_pre ? '' : 'disabled'">
         <a class="page-link" href="#" @click.prevent="$emit('emit-pages', pages.current_page - 1)">

@@ -78,6 +78,13 @@ export default {
           document.cookie = `hexToken=${token};expires=${new Date(expired)};`;
           // 登入後直接進入 admin 後台的管理產品列表
           this.$router.push('/admin/products');
+        } else {
+          this.user.username = '';
+          this.user.password = '';
+          this.$swal({
+            title: '輸入資料有誤，請重新輸入',
+            icon: 'error',
+          });
         }
       });
     },

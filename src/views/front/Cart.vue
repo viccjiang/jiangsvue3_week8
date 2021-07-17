@@ -3,7 +3,7 @@
   <div class="container">
     <!-- 購物車列表 -->
     <div class="col">
-      <div class="sticky-top">
+      <div class="cartTable">
         <table class="table align-middle">
           <thead>
             <tr>
@@ -235,6 +235,7 @@ export default {
         this.status.loadingItem = '';
         this.getCart();
         this.isLoading = false;
+        emitter.emit('update-cart'); // 更新購物車數量
       });
     },
     // 更新購物車

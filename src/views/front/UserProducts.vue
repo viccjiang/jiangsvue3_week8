@@ -1,8 +1,106 @@
 <template>
   <Loading :active="isLoading"></Loading>
-  <div class="container">
-    <div class="row mt-4">
-      <div class="col">
+  <div class="container ">
+    <div class="row">
+      <div class="col-3 mt-4">
+        <div class="list-group ">
+          <a
+            href="#"
+            v-for="item in categories"
+            :key="item"
+            class="list-group-item list-group-item-action "
+            @click.prevent="selectCategory = item"
+            >{{ item }}</a
+          >
+        </div>
+      </div>
+      <div class="col-9">
+        <div class="row mt-4">
+          <div class="col mb-4">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 ">
+              <div class="col " v-for="item in filterProducts" :key="item.id">
+                <div class="card h-100 rounded-0 ">
+                  <!-- 原本寫法複雜 -->
+                  <div
+                    style="height: 300px; background-size: cover; background-position: center"
+                    :style="{ backgroundImage: `url(${item.imageUrl})` }"
+                  ></div>
+
+                  <!-- <img :src="item.imageUrl" class="card-img-top" alt="..." /> -->
+                  <div class="card-body">
+                    <span class="badge bg-secondary text-light mb-2">{{ item.category }}</span>
+                    <h5 class="card-title">{{ item.title }}</h5>
+                    <h6 class="h6 text-secondary">
+                      {{ item.description }}
+                    </h6>
+                    <div class="h5 list-inline-item " v-if="!item.price">
+                      {{ item.origin_price }} 元
+                    </div>
+                    <del class="h6 list-inline-item text-secondary" v-if="item.price"
+                      >原價 NT$ {{ $filters.currency(item.origin_price) }} 元</del
+                    >
+                    <div class="h5 text-danger" v-if="item.price">
+                      NT$ {{ $filters.currency(item.price) }} 元
+                    </div>
+                    <!-- 更多按鈕 -->
+                    <div class="d-grid gap-2 col-12 mx-auto">
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        @click="getProduct(item.id)"
+                      >
+                        查看更多
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-outline-danger"
+                        :disabled="this.status.loadingItem === item.id"
+                        @click="addCart(item.id)"
+                      >
+                        <div
+                          v-if="this.status.loadingItem === item.id"
+                          class="spinner-border text-danger spinner-border-sm"
+                          role="status"
+                        >
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                        加到購物車
+                      </button>
+                    </div>
+
+                    <!-- 原始版本按鈕樣式 -->
+                    <!-- <div class="btn-group btn-group-sm">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary"
+                    @click="getProduct(item.id)"
+                  >
+                    查看更多
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger"
+                    :disabled="this.status.loadingItem === item.id"
+                    @click="addCart(item.id)"
+                  >
+                    <div
+                      v-if="this.status.loadingItem === item.id"
+                      class="spinner-border text-danger spinner-border-sm"
+                      role="status"
+                    >
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                    加到購物車
+                  </button>
+                </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 原始版本產品列表 -->
+          <!-- <div class="col">
         <table class="table align-middle">
           <thead>
             <tr>
@@ -61,8 +159,11 @@
             </tr>
           </tbody>
         </table>
+      </div> -->
+          <!-- 分頁 -->
+          <Pagination :pages="pagination" @emit-pages="getProducts"></Pagination>
+        </div>
       </div>
-      <Pagination :pages="pagination" @emit-pages="getProducts"></Pagination>
     </div>
   </div>
 </template>
@@ -80,6 +181,8 @@ export default {
       status: {
         loadingItem: '', // 對應品項 id
       },
+      categories: [],
+      selectCategory: '',
     };
   },
   components: {
@@ -91,7 +194,7 @@ export default {
       emitter,
     };
   },
-  inject: ['emitter'],
+  // inject: ['emitter'],
   methods: {
     getProducts(page = 1) {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/?page=${page}`;
@@ -104,8 +207,18 @@ export default {
           console.log(response.data);
           this.products = response.data.products;
           this.pagination = response.data.pagination;
+          this.getCategories();
         }
       });
+    },
+    getCategories() {
+      // Vue 3 雙向綁定 Proxy(new Proxy 物件)
+      // new Set
+      const categories = new Set();
+      this.products.forEach((item) => {
+        categories.add(item.category);
+      });
+      this.categories = [...categories];
     },
     getProduct(id) {
       this.$router.push(`/product/${id}`);
@@ -120,10 +233,19 @@ export default {
       this.$http.post(url, { data: cart }).then((res) => {
         this.status.loadingItem = '';
         console.log(res);
+        emitter.emit('update-cart'); // 更新購物車數量
       });
     },
   },
+  computed: {
+    // 產生新的資料集
+    filterProducts() {
+      return this.products.filter((item) => item.category.match(this.selectCategory));
+      // 空字串，或任何符合結果都會是 “真值”
+    },
+  },
   created() {
+    // 改為mounted
     this.getProducts();
   },
 };

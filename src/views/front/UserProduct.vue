@@ -3,7 +3,7 @@
   <div class="container">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><router-link to="/products">產品列表</router-link></li>
+        <li class="breadcrumb-item "><router-link to="/products">產品列表</router-link></li>
         <li class="breadcrumb-item active" aria-current="page">{{ product.title }}</li>
         <li class="breadcrumb-item active" aria-current="page">產品細節</li>
       </ol>
@@ -17,7 +17,7 @@
             <div class="carousel-item active">
               <img :src="product.imageUrl" alt="" class="img-fluid mb-3" />
             </div>
-            <div class="carousel-item">
+            <!-- <div class="carousel-item">
               <img
                 src="https://images.unsplash.com/photo-1502743780242-f10d2ce370f3?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1916&amp;q=80"
                 class="d-block w-100"
@@ -30,9 +30,9 @@
                 class="d-block w-100"
                 alt="..."
               />
-            </div>
+            </div> -->
           </div>
-          <a
+          <!-- <a
             class="carousel-control-prev"
             href="#carouselExampleControls"
             role="button"
@@ -49,7 +49,7 @@
           >
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
-          </a>
+          </a> -->
         </div>
       </div>
       <div class="col-md-5">
@@ -96,29 +96,76 @@
             </div>
           </div>
           <div class="col-6">
-            <a
+            <button
+              type="button"
+              class="text-nowrap btn btn-dark w-100 py-2"
+              @click.prevent="addToCart(product.id)"
+            >
+              加到購物車
+            </button>
+
+            <!-- 原版本加入購物車 -->
+            <!-- <a
               href="#"
               class="text-nowrap btn btn-dark w-100 py-2"
               @click.prevent="addToCart(product.id)"
               >加到購物車</a
-            >
+            > -->
           </div>
           <!-- <button type="button" class="btn btn-outline-danger" @click="addToCart(product.id)">
             加到購物車
           </button> -->
         </div>
       </div>
+      <!-- 你可能也喜歡 -->
+      <h2>你可能也喜歡</h2>
+      <div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
+        <div class="col" v-for="item in randomProducts" :key="item">
+          <div class="card h-100 ">
+            <img
+              :src="item.imageUrl"
+              style="background-size: cover;
+              background-position: center center"
+              class="card-img-top"
+              alt="..."
+            />
+            <div class="card-body">
+              <h5 class="card-title">{{ item.title }}</h5>
+            </div>
+            <div class="card-footer">
+              <!-- 連結按鈕 待處理區塊 -->
+              <small class="text-muted"> 來去看看 </small>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <!-- 你可能也喜歡 end -->
+    <!-- <ul>
+        <li v-for="item in randomProducts" :key="item">
+          <img :src="item.imageUrl" alt="" class="img-fluid mb-3" />
+          {{ item.title }}
+        </li>
+      </ul>
+    </div> -->
     <!-- 模板 end -->
   </div>
 </template>
 
 <script>
+import emitter from '@/methods/emitter';
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
 export default {
   data() {
     return {
       isLoading: false,
       product: {},
+      products: [],
+      randomProducts: [],
       id: '',
     };
   },
@@ -131,7 +178,37 @@ export default {
           this.product = response.data.product;
         }
         this.isLoading = false;
+        this.getProducts();
       });
+    },
+    // 取得全部產品
+    getProducts() {
+      const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/products/all`;
+      this.$http.get(url).then((res) => {
+        console.log(res);
+        this.products = res.data.products;
+        this.getLookAlike();
+      });
+    },
+    // 隨機取得同類別產品
+    getLookAlike() {
+      const { category } = this.product;
+      const filterProducts = this.products.filter((item) => item.category === category);
+      console.log('filterProducts:', filterProducts);
+      // 如果 小於4 就用這個 length，否則就用 4
+      const maxSize = filterProducts.length < 4 ? filterProducts.length : 4;
+      const arrSet = new Set([]);
+      console.log(arrSet.size);
+      getRandomInt();
+      for (let index = 0; arrSet.size < maxSize; index + 1) {
+        const num = getRandomInt(filterProducts.length);
+        arrSet.add(num);
+        console.log(arrSet, num);
+      }
+      arrSet.forEach((i) => {
+        this.randomProducts.push(filterProducts[i]);
+      });
+      console.log(this.randomProducts);
     },
     addToCart(id, qty = 1) {
       const url = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/cart`;
@@ -143,6 +220,9 @@ export default {
       this.$http.post(url, { data: cart }).then((response) => {
         this.isLoading = false;
         this.$httpMessageState(response, '加入購物車');
+        console.log(response.data);
+        emitter.emit('update-cart'); // 更新購物車數量
+
         // this.$router.push('/cart');
       });
     },

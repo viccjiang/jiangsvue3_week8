@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import 'bootstrap'; // 修正navbar下拉選單
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import Loading from 'vue3-loading-overlay';
@@ -10,6 +11,8 @@ import {
 import AllRules from '@vee-validate/rules';
 import { localize, setLocale } from '@vee-validate/i18n';
 import zhTW from '@vee-validate/i18n/dist/locale/zh_TW.json';
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 import App from './App.vue';
 import router from './router';
@@ -36,8 +39,15 @@ setLocale('zh_TW');
 // 此函式的用途是整合 Ajax 的錯誤事件，統一整理發送給予 Toast 處理
 app.config.globalProperties.$httpMessageState = $httpMessageState;
 
+const options = {
+  confirmButtonColor: '#d73a49',
+  cancelButtonColor: '#ff7674',
+};
+
 app.use(router);
 app.use(VueAxios, axios);
+app.use(VueSweetalert2, options);
+
 app.component('Loading', Loading);
 app.component('Form', Form);
 app.component('Field', Field);
