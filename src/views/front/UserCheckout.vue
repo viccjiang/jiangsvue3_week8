@@ -1,9 +1,10 @@
 <template>
   <Loading :active="isLoading"></Loading>
   <div class="container">
-    <div class="my-5 row justify-content-center">
-      <form class="col-md-6" @submit.prevent="payOrder">
-        <table class="table align-middle">
+    <div class="mb-5 row justify-content-center">
+      <h3 class="bg-secondary text-light my-5 border p-3 ">Step3.確認付款</h3>
+      <form class="col" @submit.prevent="payOrder">
+        <table class="table align-middle col-md-6">
           <thead>
             <th>品名</th>
             <th>數量</th>
@@ -24,7 +25,7 @@
           </tfoot>
         </table>
 
-        <table class="table">
+        <table class="table col-md-6">
           <tbody>
             <tr>
               <th width="100">Email</th>
@@ -51,10 +52,12 @@
             </tr>
           </tbody>
         </table>
+
         <div class="checkBtn d-flex justify-content-between">
-          <router-link class="btn btn-outline-secondary" to="/cart">回上一頁</router-link>
+          <router-link class="btn btn-outline-secondary" to="/products">繼續購物</router-link>
           <div v-if="order.is_paid === false">
             <button class="btn btn-danger">確認付款去</button>
+            <!-- 再做一個完成訂購頁面 -->
           </div>
         </div>
       </form>

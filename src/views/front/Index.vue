@@ -198,7 +198,7 @@
       </div>
     </div>
     <!-- sub -->
-    <div class="bg-light py-4">
+    <!-- <div class="bg-light py-4">
       <div class="container">
         <div
           class="d-flex flex-column flex-md-row justify-content-between
@@ -217,7 +217,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- footer -->
     <div class="bg-dark py-5">
       <div class="container">
@@ -229,13 +229,13 @@
           </div>
           <ul class="d-flex list-unstyled mb-0 h4">
             <li>
-              <a href="#" class="text-white mx-3"><i class="fab fa-facebook"></i></a>
+              <a href="#" class="text-white mx-3"><i class="bi bi-facebook"></i></a>
             </li>
             <li>
-              <a href="#" class="text-white mx-3"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="text-white mx-3"><i class="bi bi-instagram"></i></a>
             </li>
             <li>
-              <a href="#" class="text-white ms-3"><i class="fab fa-line"></i></a>
+              <a href="#" class="text-white ms-3"><i class="bi bi-messenger"></i></a>
             </li>
           </ul>
         </div>

@@ -60,20 +60,41 @@
             <li class="breadcrumb-item active" aria-current="page">產品細節</li>
           </ol>
         </nav> -->
-        <article class="col">
+        <article class="col mb-5">
           <h2>{{ product.title }}</h2>
           <div>{{ product.content }}</div>
           <div>{{ product.description }}</div>
         </article>
-        <div class="h5" v-if="!product.price">{{ product.origin_price }} 元</div>
-        <del class="h6" v-if="product.price"
+        <div class="h5 " v-if="!product.price">{{ product.origin_price }} 元</div>
+        <del class="h6 " v-if="product.price"
           >原價 {{ $filters.currency(product.origin_price) }} 元</del
         >
-        <div class="h5 text-danger" v-if="product.price">
+        <div class="h5 text-danger mb-5" v-if="product.price">
           現在只要 {{ $filters.currency(product.price) }} 元
         </div>
+
         <div class="row align-items-center">
-          <div class="col-6">
+          <!-- <div class="input-group input-group-sm w-lg-50 pe-lg-2 mb-4">
+            <button
+              class="btn border link opacity-80"
+              type="button"
+              @click="removeQty"
+              :class="{ disabled: this.qty <= 1 }"
+            >
+              <i
+                class="bi bi-dash"
+                data-cursor="cursor"
+                :class="{ 'opacity-50': this.qty <= 1 }"
+              ></i>
+            </button>
+
+            <input type="number" class="form-control text-center" v-model.number="qty" />
+
+            <button class="btn border link opacity-80" type="button" @click="addQty">
+              <i class="bi bi-plus" data-cursor="cursor"></i>
+            </button>
+          </div> -->
+          <!-- <div class="col-6">
             <div class="input-group my-3 bg-light rounded">
               <div class="input-group-prepend">
                 <button class="btn btn-outline-dark border-0 py-2" type="button" id="button-addon1">
@@ -94,11 +115,11 @@
                 </button>
               </div>
             </div>
-          </div>
+          </div> -->
           <div class="col-6">
             <button
               type="button"
-              class="text-nowrap btn btn-dark w-100 py-2"
+              class="text-nowrap btn btn-secondary border rounded-0 w-100 py-2"
               @click.prevent="addToCart(product.id)"
             >
               加到購物車
@@ -118,7 +139,7 @@
         </div>
       </div>
       <!-- 你可能也喜歡 -->
-      <h2>你可能也喜歡</h2>
+      <h2 class="mt-4">你可能也喜歡</h2>
       <div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
         <div class="col" v-for="item in randomProducts" :key="item">
           <div class="card h-100 ">
@@ -134,7 +155,14 @@
             </div>
             <div class="card-footer">
               <!-- 連結按鈕 待處理區塊 -->
-              <small class="text-muted"> 來去看看 </small>
+              <!-- <small class="text-muted"> 來去看看 </small> -->
+              <button
+                type="button"
+                class="text-nowrap btn btn-secondary border-0 rounded-0 w-100 py-2"
+                @click.prevent="addToCart(item.id)"
+              >
+                加到購物車
+              </button>
             </div>
           </div>
         </div>
@@ -169,6 +197,7 @@ export default {
       id: '',
     };
   },
+
   methods: {
     getProduct() {
       const api = `${process.env.VUE_APP_API}api/${process.env.VUE_APP_PATH}/product/${this.id}`;

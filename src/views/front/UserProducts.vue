@@ -21,10 +21,13 @@
               <div class="col " v-for="item in filterProducts" :key="item.id">
                 <div class="card h-100 rounded-0 ">
                   <!-- 原本寫法複雜 -->
-                  <div
-                    style="height: 300px; background-size: cover; background-position: center"
-                    :style="{ backgroundImage: `url(${item.imageUrl})` }"
-                  ></div>
+
+                  <a href="#" class="rounded-0 border" @click.prevent="getProduct(item.id)">
+                    <div
+                      style="height: 300px; background-size: cover; background-position: center"
+                      :style="{ backgroundImage: `url(${item.imageUrl})` }"
+                    ></div>
+                  </a>
 
                   <!-- <img :src="item.imageUrl" class="card-img-top" alt="..." /> -->
                   <div class="card-body">
@@ -33,39 +36,24 @@
                     <h6 class="h6 text-secondary">
                       {{ item.description }}
                     </h6>
+
                     <div class="h5 list-inline-item " v-if="!item.price">
                       {{ item.origin_price }} 元
                     </div>
-                    <del class="h6 list-inline-item text-secondary" v-if="item.price"
+                    <del class="h6 list-inline-item text-secondary mt-4" v-if="item.price"
                       >原價 NT$ {{ $filters.currency(item.origin_price) }} 元</del
                     >
-                    <div class="h5 text-danger" v-if="item.price">
+                    <div class="h5 text-danger mb-3" v-if="item.price">
                       NT$ {{ $filters.currency(item.price) }} 元
                     </div>
+
                     <!-- 更多按鈕 -->
 
                     <div class="d-grid gap-2 col-12 mx-auto">
-                      <!-- 我的最愛 -->
-                      <button
-                        type="button"
-                        @click="addMyFavorite(item)"
-                        :class="{ active: myFavorite.includes(item.id) }"
-                        class="btn d-block btn-outline-success"
-                      >
-                        加到我的最愛
-                      </button>
-                      <!-- 查看細節 -->
-                      <button
-                        type="button"
-                        class="btn btn-outline-secondary"
-                        @click="getProduct(item.id)"
-                      >
-                        查看更多
-                      </button>
                       <!-- 加入購物車 -->
                       <button
                         type="button"
-                        class="btn btn-outline-danger"
+                        class="btn btn-outline-secondary rounded-0 border"
                         :disabled="this.status.loadingItem === item.id"
                         @click="addCart(item.id)"
                       >
@@ -77,6 +65,24 @@
                           <span class="visually-hidden">Loading...</span>
                         </div>
                         加到購物車
+                      </button>
+                      <!-- 我的最愛 -->
+
+                      <button
+                        type="button"
+                        @click="addMyFavorite(item)"
+                        :class="{ active: myFavorite.includes(item.id) }"
+                        class="btn d-block btn-outline-secondary rounded-0 border"
+                      >
+                        加到我的最愛
+                      </button>
+                      <!-- 查看細節 -->
+                      <button
+                        type="button"
+                        class="btn btn-outline-secondary rounded-0 border"
+                        @click="getProduct(item.id)"
+                      >
+                        查看更多
                       </button>
                     </div>
 

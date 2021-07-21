@@ -51,6 +51,12 @@
           <p><mark> 我們將帶你進入美好生活，讓你享受每一刻精彩！ </mark></p>
           <p><mark>一起為您打造美好居家生活 ，Make Life Easier！</mark></p>
         </blockquote>
+
+        <router-link to="/products">
+          <button type="button" class="btn btn-outline-secondary rounded-pill mt-3 py-3 px-5">
+            屬於你的美好生活指南
+          </button>
+        </router-link>
       </div>
     </div>
 
