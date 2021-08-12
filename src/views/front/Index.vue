@@ -16,7 +16,7 @@
               讓你的居家生活風格更加獨特
             </h1>
             <p style="text-shadow: black 0em 0em 0.1em" class="mb-4 fs-5 text">
-              帶你進入美好生活，創造你的生活美學
+              進入美好生活，創造你的生活美學
             </p>
 
             <router-link to="/products">
